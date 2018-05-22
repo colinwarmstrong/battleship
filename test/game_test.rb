@@ -21,6 +21,16 @@ class GameTest < Minitest::Test
     assert_equal 0 , game.start_time
   end
 
+  def test_next_turn_correctly_increments_turns
+    game = Game.new
+
+    assert_equal 0, game.turns
+    game.next_turn
+    assert_equal 1, game.turns
+    game.next_turn
+    assert_equal 2, game.turns
+  end
+
   def test_we_can_verify_user_inputs_two_coordinates_for_destryoer
     skip
     game = Game.new

@@ -80,9 +80,24 @@ class Game
   end
 
   def begin_main_game_phase
+    puts 'Here is your map:'
+    @player_board.display_player_grid
+    wait_for_enter
+    print `clear`
+    @start_time = Time.new
+    next_turn
   end
 
-  def convert_coordinate(coordinate)
+  def next_turn
+    @turns += 1
+    @player_board.display_both_grids(@computer_board.grid, @player_board.grid, @turns)
+    player_shot_sequence
+  end
+
+  def player_shot_sequence
+  end
+
+  def convert_individual_coordinate(coordinate)
     characters = coordinate.chars
     if characters[0]  == 'a'
       return [0, characters[1].to_i - 1]
@@ -97,15 +112,15 @@ class Game
     end
   end
 
-  def split_coordinates(coordinates_string)
+  def convert_coordinates(coordinates_string)
     coordinates_array = coordinates_string.split(' ')
     coordinates_array.map! do |coordinate|
-      convert_coordinate(coordinate)
+      convert_individual_coordinate(coordinate)
     end
   end
 
   def verify_destroyer(coordinates, grid)
-    coord_array = split_coordinates(coordinates)
+    coord_array = convert_coordinates(coordinates)
     verify_given_two_destroyer_coordinates(coordinates, grid)
     verify_given_correct_destroyer_coordinates(coord_array, grid)
     verify_destroyer_horizontal_or_vertical(coord_array, grid)
