@@ -72,25 +72,54 @@ class Game
   end
 
   def player_submarine_placement
+    'Enter the coordinates for your three unit submarine:'
+    coordinates = get_input
+    verify_submarine(coordinates, @player_board.grid)
+    @player.destroyer = @player.place_ship(coordinates, @player_board.grid)
+    begin_main_game_phase
+  end
+
+  def begin_main_game_phase
+  end
+
+  def convert_coordinate(coordinate)
+    characters = coordinate.chars
+    if characters[0]  == 'a'
+      return [0, characters[1].to_i - 1]
+    elsif characters[0] == 'b'
+      return [1, characters[1].to_i - 1]
+    elsif characters[0] == 'c'
+      return [2, characters[1].to_i - 1]
+    elsif characters[0] == 'd'
+      return [3, characters[1].to_i - 1]
+    else
+      return [4, 4]
+    end
+  end
+
+  def split_coordinates(coordinates_string)
+    coordinates_array = coordinates_string.split(' ')
+    coordinates_array.map! do |coordinate|
+      convert_coordinate(coordinate)
+    end
   end
 
   def verify_destroyer(coordinates, grid)
     coord_array = split_coordinates(coordinates)
-    verify_given_two_coordinates(coordinates, grid)
-    verify_given_correct_coordinates(coord_array, grid)
-    verify_horizontal_or_vertical(coord_array, grid)
-    verify_units_are_adjacent(coord_array, grid)
+    verify_given_two_destroyer_coordinates(coordinates, grid)
+    verify_given_correct_destroyer_coordinates(coord_array, grid)
+    verify_destroyer_horizontal_or_vertical(coord_array, grid)
+    verify_destroyer_units_are_adjacent(coord_array, grid)
   end
 
-  def verify_given_two_coordinates(coordinates, grid)
+  def verify_given_two_destroyer_coordinates(coordinates, grid)
     if coordinates.split.length != 2 || coordinates.delete(' ').chars.length != 4
       puts 'Please enter two coordinates seperated by spaces in the form A1. Try agin.'
       return player_destroyer_placement
     end
   end
 
-  def verify_given_correct_coordinates(coord_array, grid)
-    coord_array = coordinates.delete(' ').chars
+  def verify_given_correct_destroyer_coordinates(coord_array, grid)
     if !(('a'..'d').include?(coord_array[0])) || !(('a'..'d').include?(coord_array[2]))
       puts 'Make sure your coordinates are between A1 and D4. Try again.'
       return player_destroyer_placement
@@ -100,17 +129,66 @@ class Game
     end
   end
 
-  def verify_horizontal_or_vertical(coord_array, grid)
+  def verify_destroyer_horizontal_or_vertical(coord_array, grid)
     if coord_array[0][0] != coord_array[1][0] && coord_array[0][1] != coord_array[1][1]
       puts 'Ships must be placed horizontally or vertically. Try again.'
       return player_destroyer_placement
     end
   end
 
-  def verify_units_are_adjacent(coord_array, grid)
+  def verify_destroyer_units_are_adjacent(coord_array, grid)
     if coord_array[0][0] != coord_array[1][0] - 1 && coord_array[1][0] != coord_array[0][0] - 1 && coord_array[0][1] != coord_array[1][1] - 1 && coord_array[1][1] != coord_array[0][1] - 1
       puts 'All units must be adjacent. Try again.'
       return player_destroyer_placement
+    end
+  end
+
+  def verify_submarine(coordinates, grid)
+    coord_array = split_coordinates(coordinates)
+    verify_given_three_sub_coordinates(coordinates, grid)
+    verify_given_correct_sub_coordinates(coord_array, grid)
+    verify_sub_horizontal_or_vertical(coord_array, grid)
+    verify_sub_units_are_adjacent(coord_array, grid)
+    verify_sub_units_are_unoccupied(coord_array, grid)
+  end
+
+  def verify_given_three_sub_coordinates(coordinates, grid)
+    if coordinates.split.length != 3 || coordinates.delete(' ').chars.length != 6
+      puts 'Please enter three coordinates seperated by spaces in the form A1. Try agin.'
+      return player_submarine_placement
+    end
+  end
+
+  def verify_given_correct_sub_coordinates(coord_array, grid)
+    if !(('a'..'d').include?(coord_array[0])) || !(('a'..'d').include?(coord_array[2])) || !(('a'..'d').include?(coord_array[4]))
+      puts 'Make sure your coordinates are between A1 and D4. Try again.'
+      return player_submarine_placement
+    elsif !(('1'..'4').include?(coord_array[1])) || !(('1'..'4').include?(coord_array[3])) || !(('1'..'4').include?(coord_array[5]))
+      puts 'Make sure your coordinates are between A1 and D4. Try again.'
+      return player_submarine_placement
+    end
+  end
+
+  def verify_sub_horizontal_or_vertical(coord_array, grid)
+    if (coord_array[0][0] != coord_array[1][0] || coord_array[0][0] != coord_array[2][0] || coord_array[1][0] != coord_array[2][0]) && (coord_array[0][1] != coord_array[1][1] || coord_array[0][1] != coord_array[2][1] || coord_array[1][1] != coord_array[2][1])
+      puts 'Ships must be placed horizontally or vertically. Try again.'
+      return player_submarine_placement
+    end
+  end
+
+  def verify_sub_units_are_adjacent(coord_array, grid)
+    if ((coord_array[0][0] - coord_array[1][0]).abs > 1 || (coord_array[0][0] - coord_array[2][0]).abs > 2 || (coord_array[1][0] - coord_array[2][0]).abs > 2) || ((coord_array[0][1] - coord_array[1][1]).abs > 1 || (coord_array[0][1] - coord_array[2][1]).abs > 2 || (coord_array[1][1] - coord_array[2][1]).abs > 2)
+      puts 'Make sure your coordinates are consecutive and adjacent. Try again.'
+      return player_submarine_placement
+    end
+  end
+
+  def verify_sub_units_are_unoccupied(coord_array, grid)
+    coord_array.each do |coordinate|
+      if grid[coordinate[0]][coordinate[1]].filled?
+        puts 'Ships cannot overlap. Try again.'
+        return player_submarine_placement
+      end
     end
   end
 
