@@ -3,6 +3,7 @@ require 'minitest/pride'
 require './lib/computer.rb'
 
 class ComputerTest < Minitest::Test
+  attr_accessor :destroyer, :submarine
 
   def test_it_exists
     computer = Computer.new
