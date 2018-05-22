@@ -26,7 +26,7 @@ class ComputerTest < Minitest::Test
 
    def test_it_can_place_horizontal_ships
      skip
-     computer = Computer.new
+     computer = Computer.new.horizontal_placement
    end
 
    def test_it_can_create_horizontal_ships_with_proper_attributes
@@ -39,5 +39,28 @@ class ComputerTest < Minitest::Test
      assert_equal 3, ship.hit_points
      assert_equal 3, ship.ship_length
    end
+
+   def test_it_can_validate_vertical_placement
+     skip
+     computer = Computer.new
+
+      assert_nil computer.horizontal_placement_validation(2, @player.grid, 0, 0)
+    end
+
+    def test_it_can_place_vertical_ships
+      skip
+      computer = Computer.new.vertical_placement
+    end
+
+    def test_it_can_create_vertical_ships_with_proper_attributes
+      computer = Computer.new
+
+      ship = computer.create_vertical_ship(3, 0, 0)
+
+      assert_instance_of Ship, ship
+      assert_equal [[0, 0], [1, 0], [2, 0]], ship.coordinates
+      assert_equal 3, ship.hit_points
+      assert_equal 3, ship.ship_length
+    end
 
 end

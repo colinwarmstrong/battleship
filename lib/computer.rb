@@ -55,7 +55,7 @@ class Computer
     end
   end
 
-  def create_vertical_ship
+  def create_vertical_ship(ship_length, row, column)
     coordinates = []
     ship_length.times do |index|
       coordinates << [row + index, column]
