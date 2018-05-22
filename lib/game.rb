@@ -1,6 +1,7 @@
 require './lib/player.rb'
 require './lib/computer.rb'
 require './lib/board.rb'
+require 'pry'
 
 class Game
   attr_reader :player, :computer, :player_board, :computer_board, :turns, :start_time
@@ -22,11 +23,11 @@ class Game
 
   def start_game
     puts 'Would you like to (p)lay, read the (i)nstructions, or (q)uit?'
-    start_game_choice = gets_input
+    start_game_choice = get_input
     start_game_flow(start_game_choice)
   end
 
-  def gets_input
+  def get_input
     print '> '
     gets.strip.downcase
   end
@@ -34,7 +35,7 @@ class Game
   def start_game_flow(start_game_choice)
     if start_game_choice == 'p' || start_game_choice == 'play'
       computer_ship_placement
-    elsif start_game_choice = 'i' || start_game_choice == 'instructions'
+    elsif start_game_choice == 'i' || start_game_choice == 'instructions'
       instructions
     elsif start_game_choice == 'q' || start_game_choice == 'quit'
       quit
@@ -46,6 +47,7 @@ class Game
 
   def instructions
     puts 'Here are the instructions.'
+    start_game
   end
 
   def quit
@@ -54,35 +56,45 @@ class Game
     exit
   end
 
+  def wait_for_user_input
+    print 'Press ENTER to continue.'
+    input = gets.chomp.downcase
+    if input == 'quit'
+      quit
+    else
+      return
+    end
+  end
+
   def computer_ship_placement
     @computer.destroyer = @computer.ship_orientation(2, @computer_board.grid)
-    @player.submarine = @computer.ship_orientation(3, @computer_board.grid)
+    @computer.submarine = @computer.ship_orientation(3, @computer_board.grid)
     puts "The enemy has placed their two ships on the grid, now place your's."
     puts "The grid has A1 at the top left and D4 at the bottom right.\n\n"
-    player_destoyer_placement
+    player_destroyer_placement
   end
 
   def player_destroyer_placement
     puts 'Enter the coordinates for your two unit destroyer:'
     coordinates = get_input
-    verify_destroyer(coordaintes, @player_board.grid)
+    verify_destroyer(coordinates, @player_board.grid)
     @player.destroyer = @player.place_ship(coordinates, @player_board.grid)
     puts "\n"
     player_submarine_placement
   end
 
   def player_submarine_placement
-    'Enter the coordinates for your three unit submarine:'
+    puts 'Enter the coordinates for your three unit submarine:'
     coordinates = get_input
     verify_submarine(coordinates, @player_board.grid)
-    @player.destroyer = @player.place_ship(coordinates, @player_board.grid)
+    @player.submarine = @player.place_ship(coordinates, @player_board.grid)
     begin_main_game_phase
   end
 
   def begin_main_game_phase
     puts 'Here is your map:'
     @player_board.display_player_grid
-    wait_for_enter
+    wait_for_user_input
     print `clear`
     @start_time = Time.new
     next_turn
@@ -98,14 +110,14 @@ class Game
     puts 'Select a coordinate to fire on: '
     coordinate = get_input.delete(' ')
     verify_shot(coordinate)
-    @player.fire_shot(coordinate, @computer_board.grid, @computer)
+    @player.fire_shot(convert_coordinates(coordinate).flatten!, @computer_board.grid, @computer)
     display_enemy_map
   end
 
   def display_enemy_map
     puts 'Here is the updated enemy map:'
     @computer_board.display_cpu_grid
-    wait_for_enter
+    wait_for_user_input
     puts '-' * 28
     player_win?
     computer_shot_sequence
@@ -119,7 +131,7 @@ class Game
   def display_player_map
     puts 'Here is your updated map:'
     @player_board.display_player_grid
-    wait_for_enter
+    wait_for_user_input
     computer_win?
     print `clear`
     next_turn
@@ -195,7 +207,7 @@ class Game
   def verify_destroyer(coordinates, grid)
     coord_array = convert_coordinates(coordinates)
     verify_given_two_destroyer_coordinates(coordinates, grid)
-    verify_given_correct_destroyer_coordinates(coord_array, grid)
+    verify_given_correct_destroyer_coordinates(coordinates, grid)
     verify_destroyer_horizontal_or_vertical(coord_array, grid)
     verify_destroyer_units_are_adjacent(coord_array, grid)
   end
@@ -207,7 +219,8 @@ class Game
     end
   end
 
-  def verify_given_correct_destroyer_coordinates(coord_array, grid)
+  def verify_given_correct_destroyer_coordinates(coordinates, grid)
+    coord_array = coordinates.delete(' ').chars
     if !(('a'..'d').include?(coord_array[0])) || !(('a'..'d').include?(coord_array[2]))
       puts 'Make sure your coordinates are between A1 and D4. Try again.'
       return player_destroyer_placement
@@ -232,9 +245,9 @@ class Game
   end
 
   def verify_submarine(coordinates, grid)
-    coord_array = split_coordinates(coordinates)
+    coord_array = convert_coordinates(coordinates)
     verify_given_three_sub_coordinates(coordinates, grid)
-    verify_given_correct_sub_coordinates(coord_array, grid)
+    verify_given_correct_sub_coordinates(coordinates, grid)
     verify_sub_horizontal_or_vertical(coord_array, grid)
     verify_sub_units_are_adjacent(coord_array, grid)
     verify_sub_units_are_unoccupied(coord_array, grid)
@@ -247,7 +260,8 @@ class Game
     end
   end
 
-  def verify_given_correct_sub_coordinates(coord_array, grid)
+  def verify_given_correct_sub_coordinates(coordinates, grid)
+    coord_array = coordinates.delete(' ').chars
     if !(('a'..'d').include?(coord_array[0])) || !(('a'..'d').include?(coord_array[2])) || !(('a'..'d').include?(coord_array[4]))
       puts 'Make sure your coordinates are between A1 and D4. Try again.'
       return player_submarine_placement
@@ -281,7 +295,7 @@ class Game
   end
 
   def verify_shot(coordinate)
-    coord_array = split_coordinates(coordinate).flatten!
+    coord_array = convert_coordinates(coordinate).flatten!
     if coordinate.strip.length != 2 || coordinate == nil
       puts 'Please enter one coordinate in the form A1. Try again.'
       return player_shot_sequence
@@ -293,6 +307,5 @@ class Game
       return player_shot_sequence
     end
   end
-
 
 end
