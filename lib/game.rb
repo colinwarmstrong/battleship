@@ -95,6 +95,42 @@ class Game
   end
 
   def player_shot_sequence
+    puts 'Select a coordinate to fire on: '
+    coordinate = get_input.delete(' ')
+    verify_shot(coordinate)
+    @player.fire_shot(coordinate, @computer_board.grid, @computer)
+    display_enemy_map
+  end
+
+  def display_enemy_map
+    puts 'Here is the updated enemy map:'
+    @computer_board.display_cpu_grid
+    wait_for_enter
+    puts '-' * 28
+    player_win?
+    computer_shot_sequence
+  end
+
+  def computer_shot_sequence
+    @computer.fire_random_shot(@player_board.grid, @player)
+    display_player_map
+  end
+
+  def display_player_map
+    puts 'Here is your updated map:'
+    @player_board.display_player_grid
+    wait_for_enter
+    computer_win?
+    print `clear`
+    next_turn
+  end
+
+  def player_win?
+    player_win_sequence if @computer.surviving_ships == 0
+  end
+
+  def computer_win?
+    computer_win_sequence if @player.surviving_ships == 0
   end
 
   def convert_individual_coordinate(coordinate)
