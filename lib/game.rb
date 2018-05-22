@@ -280,4 +280,19 @@ class Game
     end
   end
 
+  def verify_shot(coordinate)
+    coord_array = split_coordinates(coordinate).flatten!
+    if coordinate.strip.length != 2 || coordinate == nil
+      puts 'Please enter one coordinate in the form A1. Try again.'
+      return player_shot_sequence
+    elsif !((0..3).include?(coord_array[0])) || !((0..3).include?(coord_array[1]))
+      puts 'Make sure your coordinate is between A1 and D4. Try again.'
+      return player_shot_sequence
+    elsif @computer_board.grid[coord_array[0]][coord_array[1]].hit?
+      puts 'You have already fired at this coordinate. Try again.'
+      return player_shot_sequence
+    end
+  end
+
+
 end
