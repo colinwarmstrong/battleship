@@ -133,6 +133,43 @@ class Game
     computer_win_sequence if @player.surviving_ships == 0
   end
 
+  def calculate_game_time(finish_time)
+    finish_time - @start_time
+  end
+
+  def player_win_sequence
+    game_time = calculate_game_time(Time.new)
+    puts 'Congrats! You won the game in'
+    puts "#{@turns} turns over #{(game_time/60).to_i} min #{(game_time % 60).to_i} sec!\n\n"
+    end_game
+  end
+
+  def computer_win_sequence
+    game_time = calculate_game_time(Time.new)
+    puts '-' * 28
+    puts "You lost in #{@turns} turns over #{(game_time/60).to_i} min #{(game_time % 60).to_i} sec."
+    puts "Better luck next time.\n\n"
+    end_game
+  end
+
+  def end_game
+    puts 'Would you like to (p)lay again or (q)uit?'
+    end_game_choice = get_input
+    end_game_flow(end_game_choice)
+  end
+
+  def end_game_flow(end_game_choice)
+    if end_game_choice == 'p'  || end_game_choice == 'play'
+      print `clear`
+      Game.new.computer_ship_placement
+    elsif end_game_choice == 'q' || end_game_choice == 'quit'
+      quit
+    else
+      puts 'Invalid choice. Try again.'
+      end_game
+    end
+  end
+
   def convert_individual_coordinate(coordinate)
     characters = coordinate.chars
     if characters[0]  == 'a'
