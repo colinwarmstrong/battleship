@@ -5,4 +5,12 @@ class Space
     @hit = false
   end
 
+  def fill
+    @filled = true
+  end
+
+  def filled?
+    @filled
+  end
+
 end

@@ -52,4 +52,9 @@ class Game
     exit
   end
 
+  def computer_ship_placement
+    @computer.destroyer = @computer.ship_orientation(2, @computer_board.grid)
+    @player.submarine = @computer.ship_orientation(3, @computer_board.grid)
+  end
+
 end
