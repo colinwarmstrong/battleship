@@ -12,28 +12,28 @@ class Player
     Ship.new(coordinates)
   end
 
-  def fire_shot(coordinate, grid, player)
+  def fire_shot(coordinate, grid, computer)
     grid[coordinate[0]][coordinate[1]].take_hit
     if grid[coordinate[0]][coordinate[1]].filled?
-      determine_damaged_ship(coordinate, grid, player)
+      determine_damaged_ship(coordinate, grid, computer)
     else
       'Your shot missed.'
     end
   end
 
-  def determine_damaged_ship(coordinate, grid, player)
-    if player.destroyer.coordinates.include?(coordinate)
-      player.destroyer.take_damage
-      hit_message(player.destroyer, player)
+  def determine_damaged_ship(coordinate, grid, computer)
+    if computer.destroyer.coordinates.include?(coordinate)
+      computer.destroyer.take_damage
+      hit_message(computer.destroyer, computer)
     else
-      player.submarine.take_damage
-      hit_message(player.submarine, player)
+      computer.submarine.take_damage
+      hit_message(computer.submarine, computer)
     end
   end
 
-  def hit_message(ship, player)
+  def hit_message(ship, computer)
     if ship.sunk?
-      player.surviving_ships -= 1
+      computer.surviving_ships -= 1
       "You SUNK the enemy #{ship.name}!"
     else
       'You hit an enemy ship!'
