@@ -1,8 +1,5 @@
-require 'colorize'
-
 class Space
-  attr_accessor :filled, :hit
-
+  
   def initialize
     @filled = false
     @hit = false
@@ -16,12 +13,12 @@ class Space
     @filled
   end
 
-  def hit?
-    @hit
-  end
-
   def take_hit
     @hit = true
+  end
+
+  def hit?
+    @hit
   end
 
   def p1_display
