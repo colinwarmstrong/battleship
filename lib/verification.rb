@@ -1,8 +1,8 @@
 module Verification
 
-  def convert_coordinates(coordinates_string)
-    coordinates_array = coordinates_string.split(' ')
-    coordinates_array.map! do |coordinate|
+  def convert_coordinates(letter_coordinates)
+    letter_coordinates_split = letter_coordinates.split(' ')
+    letter_coordinates_split.map! do |coordinate|
       convert_individual_coordinate(coordinate)
     end
   end
