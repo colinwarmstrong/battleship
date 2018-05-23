@@ -1,10 +1,9 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper.rb'
 require './lib/game.rb'
 
 class GameTest < Minitest::Test
 
-  def test_it_exists
+  def test_game_exists
     game = Game.new
 
     assert_instance_of Game, game

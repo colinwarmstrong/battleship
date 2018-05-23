@@ -112,7 +112,7 @@ class Game
   end
 
   def computer_shot_sequence
-    @computer.fire_random_shot(@player_board.grid, @player)
+    puts @computer.fire_random_shot(@player_board.grid, @player)
     display_player_map
   end
 

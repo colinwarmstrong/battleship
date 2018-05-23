@@ -62,17 +62,17 @@ class Computer
     Ship.new(coordinates)
   end
 
-  def fire_random_shot(grid, computer)
+  def fire_random_shot(grid, player)
     row = rand(4)
     column = rand(4)
     if grid[row][column].hit?
-      return fire_random_shot(grid, computer)
+      return fire_random_shot(grid, player)
     end
     grid[row][column].take_hit
-    convert_random_shot_to_string(grid, computer, row, column)
+    random_shot_message(grid, player, row, column)
   end
 
-  def convert_random_shot_to_string(grid, computer, row, column)
+  def convert_random_shot_to_string(row, column)
     column_string = (column + 1).to_s
     if row == 0
       row_string = 'A'
@@ -83,34 +83,39 @@ class Computer
     elsif row == 3
       row_string = 'D'
     end
-    puts "The enemy fired at #{row_string}#{column_string}."
-    hit_or_miss(grid, computer, row, column)
+    return row_string + column_string
   end
 
-  def hit_or_miss(grid, computer, row, column)
+  def random_shot_message(grid, player, row, column)
+    random_shot_coordinate = convert_random_shot_to_string(row, column)
+    puts "The enemy fired at #{random_shot_coordinate}."
+    hit_or_miss(grid, player, row, column)
+  end
+
+  def hit_or_miss(grid, player, row, column)
     if grid[row][column].filled?
-      determine_damaged_ship(grid, computer, row, column)
+      determine_damaged_ship(grid, player, row, column)
     else
-      puts 'The shot missed.'
+      'The shot missed.'
     end
   end
 
-  def determine_damaged_ship(grid, computer, row, column)
-    if computer.destroyer.coordinates.include?([row, column])
-      computer.destroyer.take_damage
-      hit_message(computer.destroyer, computer)
+  def determine_damaged_ship(grid, player, row, column)
+    if player.destroyer.coordinates.include?([row, column])
+      player.destroyer.take_damage
+      hit_message(player.destroyer, player)
     else
-      computer.submarine.take_damage
-      hit_message(computer.submarine, computer)
+      player.submarine.take_damage
+      hit_message(player.submarine, player)
     end
   end
 
-  def hit_message(ship, computer)
+  def hit_message(ship, player)
     if ship.sunk?
-      computer.surviving_ships -= 1
-      puts "The enemy SUNK your #{ship.name}!"
+      player.surviving_ships -= 1
+      "The enemy SUNK your #{ship.name}!"
     else
-      puts "The enemy hit your #{ship.name}!"
+      "The enemy hit your #{ship.name}!"
     end
   end
 
