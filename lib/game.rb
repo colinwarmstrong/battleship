@@ -98,7 +98,7 @@ class Game
     puts 'Select a coordinate to fire on: '
     coordinate = get_input.delete(' ')
     verify_shot(coordinate)
-    @player.fire_shot(convert_coordinates(coordinate).flatten!, @computer_board.grid, @computer)
+    puts @player.fire_shot(convert_coordinates(coordinate).flatten!, @computer_board.grid, @computer)
     display_enemy_map
   end
 

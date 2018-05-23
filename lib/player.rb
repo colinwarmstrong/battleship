@@ -15,9 +15,9 @@ class Player
   def fire_shot(coordinate, grid, player)
     grid[coordinate[0]][coordinate[1]].take_hit
     if grid[coordinate[0]][coordinate[1]].filled?
-      puts determine_damaged_ship(coordinate, grid, player)
+      determine_damaged_ship(coordinate, grid, player)
     else
-      puts 'Your shot missed.'
+      'Your shot missed.'
     end
   end
 
@@ -34,9 +34,9 @@ class Player
   def hit_message(ship, player)
     if ship.sunk?
       player.surviving_ships -= 1
-      print "You SUNK the enemy #{ship.name}!"
+      "You SUNK the enemy #{ship.name}!"
     else
-      print "You hit an enemy ship!"
+      'You hit an enemy ship!'
     end
   end
 

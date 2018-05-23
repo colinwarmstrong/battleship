@@ -11,7 +11,7 @@ class Board
     return grid
   end
 
-  def display_cpu_grid(grid = @grid)
+  def display_cpu_grid
     puts '=========='
     puts '. 1 2 3 4'
     puts "A #{grid[0][0].cpu_display} #{grid[0][1].cpu_display} #{grid[0][2].cpu_display} #{grid[0][3].cpu_display}"
@@ -21,7 +21,7 @@ class Board
     puts '=========='
   end
 
-  def display_player_grid(grid = @grid)
+  def display_player_grid
     puts '=========='
     puts '. 1 2 3 4'
     puts "A #{grid[0][0].p1_display} #{grid[0][1].p1_display} #{grid[0][2].p1_display} #{grid[0][3].p1_display}"
