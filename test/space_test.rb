@@ -1,11 +1,10 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper.rb'
 require './lib/space.rb'
 require 'colorize'
 
 class SpaceTest < Minitest::Test
 
-  def test_it_exists
+  def test_space_exists
     space = Space.new
 
     assert_instance_of Space, space
@@ -51,13 +50,17 @@ class SpaceTest < Minitest::Test
   end
 
   def test_spaces_correctly_display_for_player_one
-    space = Space.new
+    space1 = Space.new
+    space2 = Space.new
 
-    assert_equal '~'.light_blue, space.p1_display
-    space.take_hit
-    assert_equal 'M', space.p1_display
-    space.fill
-    assert_equal 'H'.red, space.p1_display
+    assert_equal '~'.light_blue, space1.p1_display
+    space1.take_hit
+    assert_equal 'M', space1.p1_display
+    space1.fill
+    assert_equal 'H'.red, space1.p1_display
+
+    space2.fill
+    assert_equal 'S'.light_black, space2.p1_display
   end
 
   def test_spaces_correctly_display_for_cpu
