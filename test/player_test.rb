@@ -35,6 +35,7 @@ class PlayerTest < Minitest::Test
     coordinate = [0, 0]
 
     message = player.determine_damaged_ship(coordinate, board.grid, player)
+
     assert_equal 'Your shot missed.', message
   end
 
@@ -45,7 +46,9 @@ class PlayerTest < Minitest::Test
     player = Player.new
     ship = player.destroyer
 
-    assert_equal 'You hit an enemy ship!', player.hit_message(ship, player)
+    message = player.hit_message(ship, player)
+
+    assert_equal 'You hit an enemy ship!', message
   end
 
   def test_we_can_output_correct_hit_message
@@ -55,7 +58,9 @@ class PlayerTest < Minitest::Test
     player = Player.new
     ship = player.destroyer
 
-    assert_equal "You SUNK the enemy destroyer!", player.hit_message(ship, player)
+    message = player.hit_message(ship, player)
+
+    assert_equal "You SUNK the enemy destroyer!"
   end
 
 
