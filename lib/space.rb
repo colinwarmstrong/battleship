@@ -1,5 +1,5 @@
 class Space
-  
+
   def initialize
     @filled = false
     @hit = false
@@ -13,12 +13,12 @@ class Space
     @filled
   end
 
-  def hit?
-    @hit
-  end
-
   def take_hit
     @hit = true
+  end
+
+  def hit?
+    @hit
   end
 
   def p1_display
