@@ -15,13 +15,13 @@ class Player
   def fire_shot(coordinate, grid, player)
     grid[coordinate[0]][coordinate[1]].take_hit
     if grid[coordinate[0]][coordinate[1]].filled?
-      puts determine_damaged_ship(grid, player, coordinate)
+      puts determine_damaged_ship(coordinate, grid, player)
     else
       puts 'Your shot missed.'
     end
   end
 
-  def determine_damaged_ship(grid, player, coordinate)
+  def determine_damaged_ship(coordinate, grid, player)
     if player.destroyer.coordinates.include?(coordinate)
       player.destroyer.take_damage
       hit_message(player.destroyer, player)
