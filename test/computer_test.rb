@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/computer.rb'
+require './lib/ship.rb'
 
 class ComputerTest < Minitest::Test
   attr_accessor :destroyer, :submarine
@@ -54,6 +55,7 @@ class ComputerTest < Minitest::Test
     end
 
     def test_it_can_create_vertical_ships_with_proper_attributes
+      skip
       computer = Computer.new
 
       ship = computer.create_vertical_ship(3, 0, 0)

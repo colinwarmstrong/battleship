@@ -30,5 +30,4 @@ class BoardTest < Minitest::Test
     assert_instance_of Space, board.grid[2][3]
   end
 
-
 end

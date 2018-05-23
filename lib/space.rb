@@ -1,4 +1,5 @@
 class Space
+  attr_reader :filled, :hit
   
   def initialize
     @filled = false

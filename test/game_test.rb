@@ -22,6 +22,7 @@ class GameTest < Minitest::Test
   end
 
   def test_next_turn_correctly_increments_turns
+    skip
     game = Game.new
 
     assert_equal 0, game.turns

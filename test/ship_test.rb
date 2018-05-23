@@ -48,10 +48,9 @@ class ShipTest < Minitest::Test
     ship1 = Ship.new([[0, 0], [0, 1]])
 
     refute ship1.sunk?
-
     ship1.take_damage
+    refute ship1.sunk?
     ship1.take_damage
-
     assert ship1.sunk?
   end
 
