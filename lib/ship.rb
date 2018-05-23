@@ -1,6 +1,5 @@
 class Ship
-
-  attr_accessor :coordinates, :hit_points, :ship_length
+  attr_reader :coordinates
 
   def initialize(coordinates)
     @coordinates = coordinates

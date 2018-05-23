@@ -115,5 +115,5 @@ class Computer
       puts "The enemy hit your #{ship.name}!"
     end
   end
-  
+
 end

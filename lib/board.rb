@@ -1,8 +1,7 @@
 require './lib/space.rb'
 
 class Board
-
-  attr_accessor :grid
+  attr_reader :grid
 
   def initialize
     @grid = create_empty_grid
