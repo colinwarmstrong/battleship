@@ -1,5 +1,3 @@
-require './lib/ship.rb'
-
 class Computer
   attr_accessor :destroyer, :submarine, :surviving_ships
 
@@ -64,17 +62,17 @@ class Computer
     Ship.new(coordinates)
   end
 
-  def fire_random_shot(grid, player)
+  def fire_random_shot(grid, computer)
     row = rand(4)
     column = rand(4)
     if grid[row][column].hit?
-      return fire_random_shot(grid, player)
+      return fire_random_shot(grid, computer)
     end
     grid[row][column].take_hit
-    convert_coordinate_to_string(grid, player, row, column)
+    convert_random_shot_to_string(grid, computer, row, column)
   end
 
-  def convert_coordinate_to_string(grid, player, row, column)
+  def convert_random_shot_to_string(grid, computer, row, column)
     column_string = (column + 1).to_s
     if row == 0
       row_string = 'A'
@@ -86,30 +84,30 @@ class Computer
       row_string = 'D'
     end
     puts "The enemy fired at #{row_string}#{column_string}."
-    hit_or_miss(grid, player, row, column)
+    hit_or_miss(grid, computer, row, column)
   end
 
-  def hit_or_miss(grid, player, row, column)
+  def hit_or_miss(grid, computer, row, column)
     if grid[row][column].filled?
-      determine_damaged_ship(grid, player, row, column)
+      determine_damaged_ship(grid, computer, row, column)
     else
       puts 'The shot missed.'
     end
   end
 
-  def determine_damaged_ship(grid, player, row, column)
-    if player.destroyer.coordinates.include?([row, column])
-      player.destroyer.take_damage
-      hit_message(player.destroyer, player)
+  def determine_damaged_ship(grid, computer, row, column)
+    if computer.destroyer.coordinates.include?([row, column])
+      computer.destroyer.take_damage
+      hit_message(computer.destroyer, computer)
     else
-      player.submarine.take_damage
-      hit_message(player.submarine, player)
+      computer.submarine.take_damage
+      hit_message(computer.submarine, computer)
     end
   end
 
-  def hit_message(ship, player)
+  def hit_message(ship, computer)
     if ship.sunk?
-      player.surviving_ships -= 1
+      computer.surviving_ships -= 1
       puts "The enemy SUNK your #{ship.name}!"
     else
       puts "The enemy hit your #{ship.name}!"

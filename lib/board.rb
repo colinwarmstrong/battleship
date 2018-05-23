@@ -1,5 +1,3 @@
-require './lib/space.rb'
-
 class Board
   attr_reader :grid
 

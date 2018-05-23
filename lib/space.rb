@@ -1,8 +1,5 @@
-require 'colorize'
-
 class Space
-  attr_accessor :filled, :hit
-
+  
   def initialize
     @filled = false
     @hit = false

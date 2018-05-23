@@ -1,12 +1,14 @@
-require './lib/player.rb'
-require './lib/computer.rb'
 require './lib/board.rb'
+require './lib/computer.rb'
+require './lib/player.rb'
+require './lib/ship.rb'
+require './lib/space.rb'
 require './lib/verification.rb'
-require 'pry'
+require 'colorize'
 
 class Game
   include Verification
-  attr_reader  :turns, :start_time, :player, :computer, :player_board, :computer_board
+  attr_reader :turns, :start_time, :player, :computer, :player_board, :computer_board
 
   def initialize
     @turns = 0
@@ -28,7 +30,7 @@ class Game
     start_game_choice = get_input
     start_game_flow(start_game_choice)
   end
-  
+
   def start_game_flow(start_game_choice)
     if start_game_choice == 'p' || start_game_choice == 'play'
       computer_ship_placement
