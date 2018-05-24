@@ -15,7 +15,7 @@ class Player
   def fire_shot(coordinate, grid, computer)
     grid[coordinate[0]][coordinate[1]].take_hit
     if grid[coordinate[0]][coordinate[1]].filled?
-      determine_damaged_ship(coordinate, grid, computer)
+      determine_damaged_ship(coordinate, computer)
     else
       'Your shot missed.'
     end
