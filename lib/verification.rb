@@ -67,7 +67,8 @@ module Verification
     verify_given_three_sub_coordinates(coordinates)
     verify_given_correct_sub_coordinates(coordinates)
     verify_sub_horizontal_or_vertical(numeric_coord)
-    verify_sub_units_are_adjacent(numeric_coord)
+    verify_sub_units_are_horizontally_adjacent(numeric_coord)
+    verify_sub_units_are_vertically_adjacent(numeric_coord)
     verify_sub_units_are_unoccupied(numeric_coord, grid)
   end
 
@@ -96,8 +97,15 @@ module Verification
     end
   end
 
-  def verify_sub_units_are_adjacent(numeric_coord)
-    if ((numeric_coord[0][0] - numeric_coord[1][0]).abs > 1 || (numeric_coord[0][0] - numeric_coord[2][0]).abs > 2 || (numeric_coord[1][0] - numeric_coord[2][0]).abs > 2) || ((numeric_coord[0][1] - numeric_coord[1][1]).abs > 1 || (numeric_coord[0][1] - numeric_coord[2][1]).abs > 2 || (numeric_coord[1][1] - numeric_coord[2][1]).abs > 2)
+  def verify_sub_units_are_horizontally_adjacent(numeric_coord)
+    if (numeric_coord[0][0] - numeric_coord[1][0]).abs > 1 || (numeric_coord[0][0] - numeric_coord[2][0]).abs > 2 || (numeric_coord[1][0] - numeric_coord[2][0]).abs > 2
+      puts 'Make sure your coordinates are consecutive and adjacent. Try again.'
+      return player_submarine_placement
+    end
+  end
+
+  def verify_sub_units_are_vertically_adjacent(numeric_coord)
+    if (numeric_coord[0][1] - numeric_coord[1][1]).abs > 1 || (numeric_coord[0][1] - numeric_coord[2][1]).abs > 2 || (numeric_coord[1][1] - numeric_coord[2][1]).abs > 2
       puts 'Make sure your coordinates are consecutive and adjacent. Try again.'
       return player_submarine_placement
     end

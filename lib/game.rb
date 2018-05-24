@@ -5,7 +5,6 @@ require './lib/ship.rb'
 require './lib/space.rb'
 require './lib/verification.rb'
 require 'colorize'
-require 'pry'
 
 class Game
   include Verification
@@ -34,7 +33,7 @@ class Game
 
   def start_game_flow(start_game_choice)
     if start_game_choice == 'p' || start_game_choice == 'play'
-      computer_ship_placement
+      computer_destroyer_placement
     elsif start_game_choice == 'i' || start_game_choice == 'instructions'
       instructions
     elsif start_game_choice == 'q' || start_game_choice == 'quit'
@@ -45,19 +44,13 @@ class Game
     end
   end
 
-  def wait_for_user_input
-    print 'Press ENTER to continue.'
-    input = gets.chomp.downcase
-    if input == 'quit'
-      quit
-    else
-      return
-    end
+  def computer_destroyer_placement
+    @computer.destroyer = @computer.place_random_ship(2, @computer_board.grid)
+    computer_submarine_placement
   end
 
-  def computer_ship_placement
-    @computer.destroyer = @computer.ship_orientation(2, @computer_board.grid)
-    @computer.submarine = @computer.ship_orientation(3, @computer_board.grid)
+  def computer_submarine_placement
+    @computer.submarine = @computer.place_random_ship(3, @computer_board.grid)
     puts "The enemy has placed their two ships on the grid, now place your's."
     puts "The grid has A1 at the top left and D4 at the bottom right.\n\n"
     player_destroyer_placement
@@ -98,7 +91,7 @@ class Game
   def player_shot_sequence
     puts 'Select a coordinate to fire on: '
     coordinate = get_input.delete(' ')
-    puts verify_shot(coordinate)
+    verify_shot(coordinate)
     puts @player.fire_shot(convert_coordinates(coordinate).flatten!, @computer_board.grid, @computer)
     display_enemy_map
   end
@@ -162,7 +155,7 @@ class Game
   def end_game_flow(end_game_choice)
     if end_game_choice == 'p'  || end_game_choice == 'play'
       print `clear`
-      Game.new.computer_ship_placement
+      Game.new.computer_destroyer_placement
     elsif end_game_choice == 'q' || end_game_choice == 'quit'
       quit
     else
@@ -176,15 +169,25 @@ class Game
     gets.strip.downcase
   end
 
+  def wait_for_user_input
+    print 'Press ENTER to continue.'
+    input = gets.chomp.downcase
+    if input == 'quit'
+      quit
+    end
+  end
+
+  def instructions
+    instructions = File.open('./lib/instructions.txt')
+    puts instructions.read
+    puts "\n"
+    start_game
+  end
+
   def quit
     print `clear`
     puts 'Goodbye.'
     exit
-  end
-
-  def instructions
-    puts 'Here are the instructions.'
-    start_game
   end
 
 end

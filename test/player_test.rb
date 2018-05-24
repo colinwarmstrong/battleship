@@ -29,7 +29,6 @@ class PlayerTest < Minitest::Test
   end
 
   def test_player_can_fire_a_shot_at_empty_space
-    game = Game.new
     board = Board.new
     player = Player.new
     computer = Computer.new
@@ -41,7 +40,6 @@ class PlayerTest < Minitest::Test
   end
 
   def test_player_can_fire_hit_the_destroyer
-    game = Game.new
     board = Board.new
     player = Player.new
     computer = Computer.new
@@ -56,7 +54,6 @@ class PlayerTest < Minitest::Test
   end
 
   def test_player_can_hit_the_submarine
-    game = Game.new
     board = Board.new
     player = Player.new
     computer = Computer.new
@@ -71,7 +68,6 @@ class PlayerTest < Minitest::Test
   end
 
   def test_player_shot_can_sink_a_ship
-    game = Game.new
     board = Board.new
     player = Player.new
     computer = Computer.new

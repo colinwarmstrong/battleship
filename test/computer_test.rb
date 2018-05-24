@@ -25,17 +25,8 @@ class ComputerTest < Minitest::Test
     computer = Computer.new
     grid = Board.new.grid
 
-    actual = computer.ship_orientation(2, grid)
+    actual = computer.place_random_ship(2, grid)
     assert_instance_of Ship, actual
-  end
-
-  def test_computer_can_validate_horizontal_ship_placement
-    computer = Computer.new
-    grid = Board.new.grid
-
-    actual = computer.horizontal_placement_validation(2, grid, 0, 0)
-    assert_instance_of Array, actual
-    assert_equal 3, actual.length
   end
 
   def test_computer_can_place_horizontal_ships_with_proper_attributes
@@ -47,15 +38,6 @@ class ComputerTest < Minitest::Test
     assert_equal [[0, 0], [0, 1]], ship.coordinates
     assert_equal 2, ship.hit_points
     assert_equal 2, ship.ship_length
-  end
-
-  def test_computer_can_validate_vertical_placement
-    computer = Computer.new
-    grid = Board.new.grid
-
-    actual = computer.vertical_placement_validation(2, grid, 0, 0)
-    assert_instance_of Array, actual
-    assert_equal 3, actual.length
   end
 
   def test_computer_can_place_vertical_ships_with_proper_attributes
@@ -94,8 +76,8 @@ class ComputerTest < Minitest::Test
     player.destroyer = Ship.new([[0, 0], [0, 1]])
     player.submarine = Ship.new([[1, 0], [1, 1], [1, 2]])
 
-    message1 = computer.determine_damaged_ship(grid, player, 0, 0)
-    message2 = computer.determine_damaged_ship(grid, player, 1, 0)
+    message1 = computer.determine_damaged_ship(player, 0, 0)
+    message2 = computer.determine_damaged_ship(player, 1, 0)
 
     assert_equal 'The enemy hit your destroyer!', message1
     assert_equal 'The enemy hit your submarine!', message2
