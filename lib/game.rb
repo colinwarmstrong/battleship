@@ -5,6 +5,7 @@ require './lib/ship.rb'
 require './lib/space.rb'
 require './lib/verification.rb'
 require 'colorize'
+require 'pry'
 
 class Game
   include Verification
@@ -65,7 +66,7 @@ class Game
   def player_destroyer_placement
     puts 'Enter the coordinates for your two unit destroyer:'
     coordinates = get_input
-    verify_destroyer(coordinates, @player_board.grid)
+    verify_destroyer(coordinates)
     @player.destroyer = @player.place_ship(convert_coordinates(coordinates), @player_board.grid)
     puts "\n"
     player_submarine_placement
@@ -97,7 +98,7 @@ class Game
   def player_shot_sequence
     puts 'Select a coordinate to fire on: '
     coordinate = get_input.delete(' ')
-    verify_shot(coordinate)
+    puts verify_shot(coordinate)
     puts @player.fire_shot(convert_coordinates(coordinate).flatten!, @computer_board.grid, @computer)
     display_enemy_map
   end
@@ -112,7 +113,7 @@ class Game
   end
 
   def computer_shot_sequence
-    @computer.fire_random_shot(@player_board.grid, @player)
+    puts @computer.fire_random_shot(@player_board.grid, @player)
     display_player_map
   end
 
