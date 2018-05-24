@@ -1,5 +1,6 @@
 require './test/test_helper.rb'
 require './lib/game.rb'
+require 'pry'
 
 class GameTest < Minitest::Test
 
@@ -20,63 +21,22 @@ class GameTest < Minitest::Test
     assert_equal 0 , game.start_time
   end
 
-  def test_next_turn_correctly_increments_turns
-    skip
+  def test_game_can_convert_individual_letter_coordinates_to_numeric
     game = Game.new
 
-    assert_equal 0, game.turns
-    game.next_turn
-    assert_equal 1, game.turns
-    game.next_turn
-    assert_equal 2, game.turns
+    assert_equal [0, 0], game.convert_individual_coordinate('a1')
+    assert_equal [3, 3], game.convert_individual_coordinate('d4')
+    assert_equal [2, 1], game.convert_individual_coordinate('c2')
   end
 
-  def test_we_can_verify_user_inputs_two_coordinates_for_destryoer
-    skip
+  def test_game_can_convert_multiple_coordinates_at_once
     game = Game.new
 
-    assert game.verify_given_two_coordinates('A1 A2', game.player.grid)
-  end
+    coordinates1 = 'a1 a2'
+    coordinates2 = 'b1 b2 b3'
 
-  def test_we_can_verify_correct_destroyer_coordinates_given
-    skip
-    game = Game.new
-
-    assert game.verify_correct_coordinates([[0, 0], [0, 1]], game.player.grid)
-  end
-
-  def test_we_can_verify_destroyer_is_horizontal_or_vertical
-    skip
-    game =  Game.new
-
-    assert game.verify_horizontal_or_vertical(coord_array, grid)
-  end
-
-  def test_we_can_verify_destroyer_units_are_adjacent
-    skip
-    game = Game.new
-
-    assert game.verify_units_are_adjacent(coord_array, grid)
-  end
-
-  def test_we_can_verify_given_three_sub_coordinates
-    skip
-  end
-
-  def test_we_can_verify_given_correct_sub_units
-    skip
-  end
-
-  def test_we_can_verify_sub_is_vertical_or_horizontal
-    skip
-  end
-
-  def test_we_can_verify_sub_units_are_adjacent
-    skip
-  end
-
-  def test_we_can_verify_sub_units_are_unoccupied
-    skip
+    assert_equal [[0, 0], [0, 1]], game.convert_coordinates(coordinates1)
+    assert_equal [[1, 0], [1, 1], [1, 2]], game.convert_coordinates(coordinates2)
   end
 
 end
