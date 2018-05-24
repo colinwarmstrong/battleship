@@ -21,7 +21,7 @@ class Player
     end
   end
 
-  def determine_damaged_ship(coordinate, grid, computer)
+  def determine_damaged_ship(coordinate, computer)
     if computer.destroyer.coordinates.include?(coordinate)
       computer.destroyer.take_damage
       hit_message(computer.destroyer, computer)

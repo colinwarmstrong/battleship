@@ -122,7 +122,7 @@ module Verification
 
   def verify_shot(coordinate)
     numeric_coord = convert_coordinates(coordinate).flatten!
-    if coordinate.strip.length != 2 || coordinate == nil
+    if coordinate.strip.length != 2 || coordinate.nil?
       puts 'Please enter one coordinate in the form A1. Try again.'
       return player_shot_sequence
     elsif !((0..3).include?(numeric_coord[0])) || !((0..3).include?(numeric_coord[1]))
