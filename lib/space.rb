@@ -1,6 +1,6 @@
 class Space
   attr_reader :filled, :hit
-  
+
   def initialize
     @filled = false
     @hit = false
@@ -23,9 +23,9 @@ class Space
   end
 
   def p1_display
-    if @filled == true  && @hit == true
+    if @filled == true && @hit == true
       'H'.red
-    elsif @filled == false  && @hit == true
+    elsif @filled == false && @hit == true
       'M'
     elsif @filled == true && @hit == false
       'S'.light_black
@@ -35,9 +35,9 @@ class Space
   end
 
   def cpu_display
-    if @filled == true  && @hit == true
+    if @filled == true && @hit == true
       'H'.red
-    elsif @filled == false  && @hit == true
+    elsif @filled == false && @hit == true
       'M'
     else
       '~'.light_blue
