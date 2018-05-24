@@ -5,7 +5,6 @@ require './lib/ship.rb'
 require './lib/space.rb'
 require './lib/verification.rb'
 require 'colorize'
-require 'pry'
 
 class Game
   include Verification
@@ -178,15 +177,17 @@ class Game
     end
   end
 
+  def instructions
+    instructions = File.open('./lib/instructions.txt')
+    puts instructions.read
+    puts "\n"
+    start_game
+  end
+
   def quit
     print `clear`
     puts 'Goodbye.'
     exit
-  end
-
-  def instructions
-    puts 'Here are the instructions.'
-    start_game
   end
 
 end

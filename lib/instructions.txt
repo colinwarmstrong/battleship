@@ -1,0 +1,29 @@
+INSTRUCTIONS:
+Battleship is a naval combat game played between two
+players. After placing two ships, players will take
+turns firing shots at the enemy board trying to sink
+the enemy ships.
+
+PLACING SHIPS:
+Each player places two ships on the board at the
+beginning of the game. The destroyer is a two
+unit ship and the submarine is a three unit ship.
+When prompted, place ships by entering each
+coordinate separated by a space in the form A1.
+Ships must be placed horizontally or vertically,
+all ship units must be adjacent, and the units
+cannot wrap around the board.
+
+FIRING SHOTS:
+After placing ships, each player will alternate
+firing shots at the enemy by entering a coordinate.
+You will know if a shot misses, hits a ship, or sinks
+a ship. If a shot sinks a ship, you will be told
+which ship you sunk. This continues until one player
+sinks both enemy ships.
+
+WINNING THE GAME:
+The first player to sink all the enemy ships wins
+the game.
+
+GOOD LUCK!
