@@ -72,7 +72,6 @@ class ComputerTest < Minitest::Test
   def test_computer_can_correctly_determine_which_ship_it_hit
     computer = Computer.new
     player = Player.new
-    grid = Board.new.grid
     player.destroyer = Ship.new([[0, 0], [0, 1]])
     player.submarine = Ship.new([[1, 0], [1, 1], [1, 2]])
 
