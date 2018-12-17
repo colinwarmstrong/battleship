@@ -5,7 +5,6 @@ require './lib/game.rb'
 require './lib/player.rb'
 
 class PlayerTest < Minitest::Test
-
   def test_player_exists
     player = Player.new
 
@@ -88,5 +87,4 @@ class PlayerTest < Minitest::Test
     assert_equal 'You SUNK the enemy destroyer!', message
     assert_equal 1, computer.surviving_ships
   end
-
 end

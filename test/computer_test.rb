@@ -88,7 +88,7 @@ class ComputerTest < Minitest::Test
 
     message = computer.hit_message(player.destroyer, player)
 
-    assert_equal "The enemy hit your destroyer!", message
+    assert_equal 'The enemy hit your destroyer!', message
   end
 
   def test_computer_can_correctly_display_sunk_message
@@ -101,7 +101,6 @@ class ComputerTest < Minitest::Test
 
     message = computer.hit_message(player.destroyer, player)
 
-    assert_equal "The enemy SUNK your destroyer!", message
+    assert_equal 'The enemy SUNK your destroyer!', message
   end
-
 end

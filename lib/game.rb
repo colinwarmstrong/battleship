@@ -52,7 +52,9 @@ class Game
   def computer_submarine_placement
     @computer.submarine = @computer.place_random_ship(3, @computer_board.grid)
     puts "The enemy has placed their two ships on the grid, now place your's."
-    puts "The grid has A1 at the top left and D4 at the bottom right.\n\n"
+    puts "The grid has A1 at the top left and D4 at the bottom right:"
+    @player_board.display_player_grid
+    puts "\n"
     player_destroyer_placement
   end
 

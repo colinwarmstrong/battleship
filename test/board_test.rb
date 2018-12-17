@@ -4,7 +4,6 @@ require './lib/space.rb'
 require 'colorize'
 
 class BoardTest < Minitest::Test
-
   def test_board_exists
     board = Board.new
 
@@ -59,5 +58,4 @@ class BoardTest < Minitest::Test
 
     assert_nil board.display_both_grids(grid1, grid2, turns)
   end
-
 end

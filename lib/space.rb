@@ -43,5 +43,4 @@ class Space
       '~'.light_blue
     end
   end
-
 end

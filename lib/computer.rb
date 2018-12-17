@@ -7,7 +7,7 @@ class Computer
 
   def place_random_ship(ship_length, grid)
     orientation = rand(2)
-    if orientation == 0
+    if orientation.zero?
       horizontal_placement(ship_length, grid)
     else
       vertical_placement(ship_length, grid)
@@ -18,9 +18,7 @@ class Computer
     row = rand(4)
     column = rand(5 - ship_length)
     grid[row][column..(column + ship_length)].each do |space|
-      if space.filled?
-        return place_random_ship(ship_length, grid)
-      end
+      return place_random_ship(ship_length, grid) if space.filled?
     end
     ship_length.times { |index| grid[row][column + index].fill }
     create_horizontal_ship(ship_length, row, column)
@@ -38,9 +36,7 @@ class Computer
     row = rand(5 - ship_length)
     column = rand(4)
     grid.transpose[column][row..(row + ship_length)].each do |space|
-      if space.filled?
-        return place_random_ship(ship_length, grid)
-      end
+      return place_random_ship(ship_length, grid) if space.filled?
     end
     ship_length.times { |index| grid[row + index][column].fill }
     create_vertical_ship(ship_length, row, column)
@@ -57,9 +53,7 @@ class Computer
   def fire_random_shot(grid, player)
     row = rand(4)
     column = rand(4)
-    if grid[row][column].hit?
-      return fire_random_shot(grid, player)
-    end
+    return fire_random_shot(grid, player) if grid[row][column].hit?
     grid[row][column].take_hit
     random_shot_message(grid, player, row, column)
   end
@@ -75,7 +69,7 @@ class Computer
     elsif row == 3
       row_string = 'D'
     end
-    return row_string + column_string
+    row_string + column_string
   end
 
   def random_shot_message(grid, player, row, column)
@@ -110,5 +104,4 @@ class Computer
       "The enemy hit your #{ship.name}!"
     end
   end
-
 end

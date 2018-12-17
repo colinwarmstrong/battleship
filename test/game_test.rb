@@ -2,7 +2,6 @@ require './test/test_helper.rb'
 require './lib/game.rb'
 
 class GameTest < Minitest::Test
-
   def test_game_exists
     game = Game.new
 
@@ -37,5 +36,4 @@ class GameTest < Minitest::Test
     assert_equal [[0, 0], [0, 1]], game.convert_coordinates(coordinates1)
     assert_equal [[1, 0], [1, 1], [1, 2]], game.convert_coordinates(coordinates2)
   end
-
 end

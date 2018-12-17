@@ -3,7 +3,6 @@ require './lib/space.rb'
 require 'colorize'
 
 class SpaceTest < Minitest::Test
-
   def test_space_exists
     space = Space.new
 
@@ -72,5 +71,4 @@ class SpaceTest < Minitest::Test
     space.fill
     assert_equal 'H'.red, space.cpu_display
   end
-
 end

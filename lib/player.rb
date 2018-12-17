@@ -39,5 +39,4 @@ class Player
       'You hit an enemy ship!'
     end
   end
-
 end

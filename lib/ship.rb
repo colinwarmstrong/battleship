@@ -12,7 +12,7 @@ class Ship
   end
 
   def sunk?
-    if @hit_points == 0
+    if @hit_points.zero?
       true
     else
       false
@@ -26,5 +26,4 @@ class Ship
       'submarine'
     end
   end
-
 end

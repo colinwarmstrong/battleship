@@ -1,5 +1,4 @@
 module Verification
-
   def convert_coordinates(letter_coordinates)
     letter_coordinates_split = letter_coordinates.split(' ')
     letter_coordinates_split.map! do |coordinate|

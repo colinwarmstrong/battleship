@@ -8,7 +8,7 @@ class Board
   def create_empty_grid
     grid = []
     4.times { grid << [Space.new, Space.new, Space.new, Space.new] }
-    return grid
+    grid
   end
 
   def display_cpu_grid
@@ -42,5 +42,4 @@ class Board
     puts '==========      =========='
     puts "----------TURN #{turns}----------"
   end
-
 end

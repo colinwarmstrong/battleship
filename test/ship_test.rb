@@ -2,7 +2,6 @@ require './test/test_helper.rb'
 require './lib/ship.rb'
 
 class ShipTest < Minitest::Test
-
   def test_ships_exist
     ship = Ship.new([0, 0])
 
@@ -60,5 +59,4 @@ class ShipTest < Minitest::Test
     assert_equal 'destroyer', ship1.name
     assert_equal 'submarine', ship2.name
   end
-
 end
